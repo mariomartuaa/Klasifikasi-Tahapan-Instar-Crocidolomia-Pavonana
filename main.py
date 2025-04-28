@@ -15,19 +15,19 @@ st.set_page_config(layout="wide", initial_sidebar_state="auto")
 @st.cache_resource
 def load_convnext_model():
     # Cek apakah model sudah ada
-    if not os.path.exists('Model/ConvNeXtTiny1_model.keras'):
+    if not os.path.exists('ConvNeXtTiny1_model.keras'):
         # Kalau belum ada, download dari Google Drive
         url = 'https://drive.google.com/file/d/15cxTbXXeAf2OpoaPEjAiUnmp95AtCNT5/view?usp=sharing'  # Ganti YOUR_FILE_ID_CONVNEXT
         gdown.download(url, 'ConvNeXtTiny1_model.keras', quiet=False)
-    model = tf.keras.models.load_model('Model/ConvNeXtTiny1_model.keras')
+    model = tf.keras.models.load_model('ConvNeXtTiny1_model.keras')
     return model
 
 @st.cache_resource
 def load_inception_model():
-    if not os.path.exists('Model/InceptionV31_model.keras'):
+    if not os.path.exists('InceptionV31_model.keras'):
         url = 'https://drive.google.com/file/d/1GydV0gWsEofstdLm6cr0-fAOrl8lXkYp/view?usp=sharing'  # Ganti YOUR_FILE_ID_INCEPTION
-        gdown.download(url, 'Model/InceptionV31_model.keras', quiet=False)
-    model = tf.keras.models.load_model('Model/InceptionV31_model.keras')
+        gdown.download(url, 'InceptionV31_model.keras', quiet=False)
+    model = tf.keras.models.load_model('InceptionV31_model.keras')
     return model
 convnext_model = load_convnext_model()
 inception_model = load_inception_model()
