@@ -64,7 +64,7 @@ def make_gradcam_heatmap(img_array, model, last_conv_layer_name, pred_index=None
     heatmap = conv_outputs @ pooled_grads[..., tf.newaxis]
     heatmap = tf.squeeze(heatmap)
     heatmap = tf.maximum(heatmap, 0) / tf.math.reduce_max(heatmap)
-    return heatmap.numpy()
+    return heatmap
 
 def superimpose_heatmap(img, heatmap, alpha=0.4):
     img = np.array(img)
@@ -150,10 +150,12 @@ def main_page():
             gradcam_status_placeholder.info("⏳ Membuat Grad-CAM visualisasi...")
 
             heatmap_convnext = make_gradcam_heatmap(preprocessed_convnext, convnext_model, "convnext_tiny_stage_3_block_2_identity")
+            heatmap_convnext = heatmap_convnext.numpy()
             superimposed_img_convnext = superimpose_heatmap(image, heatmap_convnext)
 
             # Grad-CAM InceptionV3
             heatmap_inception = make_gradcam_heatmap(preprocessed_inception, inception_model, "mixed10")
+            heatmap_inception = heatmap_convnext.numpy()
             superimposed_img_inception = superimpose_heatmap(image, heatmap_inception)
 
             gradcam_status_placeholder.success("✅ Grad-CAM berhasil dibuat!")
