@@ -155,7 +155,7 @@ def main_page():
 
             # Grad-CAM InceptionV3
             heatmap_inception = make_gradcam_heatmap(preprocessed_inception, inception_model, "mixed10")
-            heatmap_inception = heatmap_convnext.numpy()
+            heatmap_inception = heatmap_inception.numpy()
             superimposed_img_inception = superimpose_heatmap(image, heatmap_inception)
 
             gradcam_status_placeholder.success("✅ Grad-CAM berhasil dibuat!")
