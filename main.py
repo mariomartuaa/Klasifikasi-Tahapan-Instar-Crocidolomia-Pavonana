@@ -15,7 +15,7 @@ st.set_page_config(layout="wide", initial_sidebar_state="auto")
 @st.cache_resource
 def load_convnext_model():
     if not os.path.exists('ConvNeXtTiny1_model.keras'):
-        url = 'https://drive.google.com/file/d/15cxTbXXeAf2OpoaPEjAiUnmp95AtCNT5/view?usp=drive_link'  # ubah jadi uc?id=FILE_ID
+        url = 'https://drive.google.com/uc?id=15cxTbXXeAf2OpoaPEjAiUnmp95AtCNT5'
         gdown.download(url, 'ConvNeXtTiny1_model.keras', quiet=False)
     model = tf.keras.models.load_model('ConvNeXtTiny1_model.keras')
     return model
@@ -23,7 +23,7 @@ def load_convnext_model():
 @st.cache_resource
 def load_inception_model():
     if not os.path.exists('InceptionV31_model.keras'):
-        url = 'https://drive.google.com/file/d/1GydV0gWsEofstdLm6cr0-fAOrl8lXkYp/view?usp=drive_link'  # ubah jadi uc?id=FILE_ID
+        url = 'https://drive.google.com/uc?id=1GydV0gWsEofstdLm6cr0-fAOrl8lXkYp'
         gdown.download(url, 'InceptionV31_model.keras', quiet=False)
     model = tf.keras.models.load_model('InceptionV31_model.keras')
     return model
