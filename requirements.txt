@@ -1,9 +1,8 @@
-Pillow==10.4.0
-streamlit==1.31.1
-ultralytics==8.2.12
-tensorflow==2.18.0
+streamlit
+Pillow
 pandas
 numpy
+tensorflow
 matplotlib
-os
-gdwon
+opencv-python
+gdown
