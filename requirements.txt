@@ -7,4 +7,4 @@ matplotlib
 opencv-python
 gdown
 opencv-python-headless
-libgl1-mesa-glx
+libgl1
