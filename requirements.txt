@@ -7,4 +7,3 @@ matplotlib
 opencv-python
 gdown
 opencv-python-headless
-libgl1
