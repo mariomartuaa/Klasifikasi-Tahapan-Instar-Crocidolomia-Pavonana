@@ -6,3 +6,4 @@ tensorflow
 matplotlib
 opencv-python
 gdown
+opencv-python-headless
