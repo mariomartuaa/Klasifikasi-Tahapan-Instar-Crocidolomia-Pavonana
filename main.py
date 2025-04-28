@@ -137,9 +137,10 @@ def main_page():
                 # Data untuk visualisasi
                 df_confidence = pd.DataFrame({
                     'Tahap Instar': class_names,
-                    'ConvNeXt Tiny (%)': prediction_convnext * 100,
-                    'Inception V3 (%)': prediction_inception * 100
+                    'ConvNeXt Tiny (%)': (prediction_convnext[0] * 100),
+                    'Inception V3 (%)': (prediction_inception[0] * 100)
                 })
+
 
                 st.dataframe(df_confidence.style.format({'ConvNeXt Tiny (%)': '{:.2f}', 'Inception V3 (%)': '{:.2f}'}))
 
