@@ -168,6 +168,45 @@ def main_page():
             with gradcam_col2:
                 st.image(superimposed_img_inception, caption="Grad-CAM InceptionV3", use_column_width=True)
 
+
+    st.markdown("---")
+    
+    # ❗ Bagian tentang Crocidolomia pavonana
+    with st.expander("Tentang Crocidolomia pavonana"):
+        st.markdown("## Tentang Crocidolomia pavonana")
+        
+        croci_col1, croci_col2 = st.columns(2)
+
+        with croci_col1:
+            st.image("Gambar/crocidolomia_pavonana.jpg", caption="Crocidolomia pavonana", use_column_width=True)
+
+        with croci_col2:
+            st.markdown(
+                """
+                <div style="text-align: justify; font-size: 18px;">
+                <b>Crocidolomia pavonana</b> adalah sejenis ulat yang menjadi hama utama pada tanaman sayuran dari famili Cruciferae seperti kubis, brokoli, dan kembang kol.
+                Hama ini mengalami beberapa tahap pertumbuhan atau <b>instar</b>, yang setiap tahapnya memiliki ukuran dan karakteristik tubuh yang berbeda.
+                Deteksi tahapan instar sangat penting untuk mengatur strategi pengendalian hama yang lebih efektif.
+                </div>
+                """, unsafe_allow_html=True
+            )
+    
+    # 🖼️ Galeri tahapan instar
+    with st.expander("Tahapan Instar Crocidolomia pavonana"):
+        st.markdown("## Tahapan Instar Crocidolomia pavonana")
+
+        instar_info = [
+            {"title": "Instar 1", "image": "Gambar/instar1.jpg", "desc": "Instar 1 berukuran panjang tubuh 1,84–2,51 mm. Tubuh sangat kecil dan berwarna hijau pucat."},
+            {"title": "Instar 2", "image": "Gambar/instar2.jpg", "desc": "Instar 2 berukuran panjang tubuh 5,1–6,82 mm. Mulai terlihat garis tubuh tipis."},
+            {"title": "Instar 3", "image": "Gambar/instar3.jpg", "desc": "Instar 3 berukuran panjang tubuh 11,97–15,85 mm. Ukuran tubuh membesar dan warna lebih hijau."},
+            {"title": "Instar 4", "image": "Gambar/instar4.jpg", "desc": "Instar 4 berukuran panjang tubuh 14,25–18,7 mm. Tubuh penuh, warna hijau tua, dan pola tubuh lebih jelas."}
+        ]
+        instar_cols = st.columns(len(instar_info))
+
+        for idx, col in enumerate(instar_cols):
+            with col:
+                st.image(instar_info[idx]["image"], caption=instar_info[idx]["title"], use_column_width=True)
+                st.caption(instar_info[idx]["desc"])
 # Run app
 if __name__ == "__main__":
     main_page()
