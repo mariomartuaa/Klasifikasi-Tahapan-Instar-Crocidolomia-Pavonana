@@ -15,7 +15,7 @@ def load_convnext_model():
     # Cek apakah model sudah ada
     if not os.path.exists('Model/ConvNeXtTiny1_model.keras'):
         # Kalau belum ada, download dari Google Drive
-        url = 'https://drive.google.com/uc?id=YOUR_FILE_ID_CONVNEXT'  # Ganti YOUR_FILE_ID_CONVNEXT
+        url = 'https://drive.google.com/file/d/15cxTbXXeAf2OpoaPEjAiUnmp95AtCNT5/view?usp=sharing'  # Ganti YOUR_FILE_ID_CONVNEXT
         gdown.download(url, 'Model/ConvNeXtTiny1_model.keras', quiet=False)
     model = tf.keras.models.load_model('Model/ConvNeXtTiny1_model.keras')
     return model
@@ -23,7 +23,7 @@ def load_convnext_model():
 @st.cache_resource
 def load_inception_model():
     if not os.path.exists('Model/InceptionV31_model.keras'):
-        url = 'https://drive.google.com/uc?id=YOUR_FILE_ID_INCEPTION'  # Ganti YOUR_FILE_ID_INCEPTION
+        url = 'https://drive.google.com/file/d/1GydV0gWsEofstdLm6cr0-fAOrl8lXkYp/view?usp=sharing'  # Ganti YOUR_FILE_ID_INCEPTION
         gdown.download(url, 'Model/InceptionV31_model.keras', quiet=False)
     model = tf.keras.models.load_model('Model/InceptionV31_model.keras')
     return model
