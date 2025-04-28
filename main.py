@@ -50,6 +50,7 @@ def preprocess_image_inception(image: Image.Image):
     return inception_preprocess(image_array)
 
 # Grad-CAM functions
+@tf.function(reduce_retracing=True)
 def make_gradcam_heatmap(img_array, model, last_conv_layer_name, pred_index=None):
     grad_model = tf.keras.models.Model(model.input, [model.get_layer(last_conv_layer_name).output, model.output])
     with tf.GradientTape() as tape:
