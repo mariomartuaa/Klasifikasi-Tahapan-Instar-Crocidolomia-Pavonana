@@ -12,6 +12,120 @@ import cv2
 
 st.set_page_config(layout="wide", initial_sidebar_state="auto")
 
+st.markdown("""
+<style>
+#MainMenu {visibility: hidden;}
+        footer {visibility: hidden;}
+        header {visibility: hidden;}
+        .main .block-container {
+            padding-top: 0rem;
+            height: 300%;
+        }
+        
+[data-testid="stHeader"] {
+    background-color: #ffff;
+}
+
+[data-testid="stAppViewBlockContainer"] {
+    background: linear-gradient(130deg, #fdf6ec 0%, #e6f4ea 50%, #fff9c4 100%);
+}
+
+[data-testid="baseButton-headerNoPadding"], [data-testid="baseButton-minimal"], [data-testid="stUploadedFile"], [data-testid="stFileUploadDropzone"], [data-testid="stFileDropzoneInstructions"] {
+    color:#2e5339;
+}
+
+.st-emotion-cache-7oyrr6 e1bju1570 {
+    color:#2e5339;
+}
+
+[data-testid="baseButton-secondary"] {
+    background-color: white;
+}
+
+[data-testid="stSidebarUserContent"], [data-testid="stFileUploadDropzone"] {
+    background: linear-gradient(135deg, #e9f5db 0%, #c7e9b0 40%, #fef9c3 100%);
+    height: 200%; 
+}
+
+.banner {
+    background-image: url('https://png.pngtree.com/thumb_back/fh260/background/20230912/pngtree-the-whole-field-was-full-of-cabbages-image_13120953.png');
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+.banner h1 {
+    font-size: 3rem;
+    color: #ffffff;
+    margin: 10px;
+    text-shadow: 1px 1px 3px #000;
+}
+.banner h2 {
+    font-size: 1.5rem;
+    color: #f0f0f0;
+    margin: 0 20px;
+    text-shadow: 1px 1px 2px #000;
+}
+.banner button {
+    height: 45px;
+    padding: 0 40px;
+    border-radius: 100px;
+    border: 1px solid #ffffff;
+    background-color: rgba(255, 255, 255, 0.8);
+    color: #1b4332;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 20px;
+}
+
+.streamlit-expanderHeader {
+    color: red;
+}
+
+[data-testid="stMarkdownContainer"]{
+    color:#2e5339;
+}
+
+/* Judul besar */
+.big-title {
+    font-size: 36px;
+    font-weight: 700;
+    color: #1b4332;
+}
+
+/* Subjudul */
+.sub-title {
+    font-size: 20px;
+    color: #3a5a40;
+}
+
+/* Kartu fitur dan deskripsi instar */
+.card {
+    border-radius: 10px;
+    padding: 1.5rem;
+    margin: 0.5rem 0;
+    background-color: #ffff;
+    border: 1px solid #2e5339;
+    color: #2e5339;
+}
+
+.card-informasi {
+    border-radius: 10px;
+    padding: 1.5rem;
+    margin: 0.5rem 0;
+    background-color: #ffff;
+    border: 1px solid #2e5339;
+    color: #2e5339;
+    height: 250px;
+}
+
+</style>
+""", unsafe_allow_html=True)
+
 # Load models
 @st.cache_resource
 def load_convnext_model():
@@ -96,7 +210,7 @@ def main_page():
     st.sidebar.markdown("✅ Membantu dalam pengelompokan instar untuk pengendalian hama")
 
     # 📤 Upload gambar untuk prediksi
-    st.markdown("<h1 style='text-align: center; color: #4A90E2;'>Klasifikasi Tahapan Instar Crocidolomia Pavonana</h1>", unsafe_allow_html=True)
+    st.markdown("""<h1 style="text-align: center; font-size: 40px; color: #2e5339;">Klasifikasi Tahapan Instar Crocidolomia Pavonana</h1>""", unsafe_allow_html=True)
     st.markdown("---")
     uploaded_file = st.file_uploader(label="Upload gambar", type=['jpg', 'jpeg', 'png'])
 
@@ -128,22 +242,22 @@ def main_page():
                 confidence_inception = np.max(prediction_inception) * 100
 
                 status_placeholder.success("✅ Klasifikasi selesai!")
-
-                pred_col1, pred_col2 = st.columns(2)
-                with pred_col1:
-                    st.info(f"**Model:** ConvNeXt Tiny\n\n**Prediksi:** {predicted_class_convnext}\n\n**Akurasi:** {confidence_convnext:.2f}%")
-                with pred_col2:
-                    st.info(f"**Model:** Inception V3\n\n**Prediksi:** {predicted_class_inception}\n\n**Akurasi:** {confidence_inception:.2f}%")
+                st.markdown(f"""
+                    <div class="card">
+                        <strong>Model: </strong>InceptionV3<br>
+                        <strong>Prediksi: </strong>{predicted_class_convnext}<br>
+                        <strong>Akurasi: </strong>{confidence_inception:.2f}%<br>
+                    </div>
+                                    """, unsafe_allow_html=True)
+                
 
                 # Data untuk visualisasi
                 df_confidence = pd.DataFrame({
                     'Tahap Instar': class_names,
-                    'ConvNeXt Tiny (%)': (prediction_convnext[0] * 100),
-                    'Inception V3 (%)': (prediction_inception[0] * 100)
+                    'Akurasi (%)': prediction_inception * 100
                 })
 
-
-                st.dataframe(df_confidence.style.format({'ConvNeXt Tiny (%)': '{:.2f}', 'Inception V3 (%)': '{:.2f}'}))
+                st.dataframe(df_confidence.style.format({'Akurasi (%)': '{:.2f}'}))
 
             # Grad-CAM ConvNeXt Tiny
             gradcam_status_placeholder = st.empty()
@@ -169,44 +283,6 @@ def main_page():
                 st.image(superimposed_img_inception, caption="Grad-CAM InceptionV3", use_column_width=True)
 
 
-    st.markdown("---")
-    
-    # ❗ Bagian tentang Crocidolomia pavonana
-    with st.expander("Tentang Crocidolomia pavonana"):
-        st.markdown("## Tentang Crocidolomia pavonana")
-        
-        croci_col1, croci_col2 = st.columns(2)
-
-        with croci_col1:
-            st.image("Gambar/crocidolomia_pavonana.jpg", caption="Crocidolomia pavonana", use_column_width=True)
-
-        with croci_col2:
-            st.markdown(
-                """
-                <div style="text-align: justify; font-size: 18px;">
-                <b>Crocidolomia pavonana</b> adalah sejenis ulat yang menjadi hama utama pada tanaman sayuran dari famili Cruciferae seperti kubis, brokoli, dan kembang kol.
-                Hama ini mengalami beberapa tahap pertumbuhan atau <b>instar</b>, yang setiap tahapnya memiliki ukuran dan karakteristik tubuh yang berbeda.
-                Deteksi tahapan instar sangat penting untuk mengatur strategi pengendalian hama yang lebih efektif.
-                </div>
-                """, unsafe_allow_html=True
-            )
-    
-    # 🖼️ Galeri tahapan instar
-    with st.expander("Tahapan Instar Crocidolomia pavonana"):
-        st.markdown("## Tahapan Instar Crocidolomia pavonana")
-
-        instar_info = [
-            {"title": "Instar 1", "image": "Gambar/instar1.jpg", "desc": "Instar 1 berukuran panjang tubuh 1,84–2,51 mm. Tubuh sangat kecil dan berwarna hijau pucat."},
-            {"title": "Instar 2", "image": "Gambar/instar2.jpg", "desc": "Instar 2 berukuran panjang tubuh 5,1–6,82 mm. Mulai terlihat garis tubuh tipis."},
-            {"title": "Instar 3", "image": "Gambar/instar3.jpg", "desc": "Instar 3 berukuran panjang tubuh 11,97–15,85 mm. Ukuran tubuh membesar dan warna lebih hijau."},
-            {"title": "Instar 4", "image": "Gambar/instar4.jpg", "desc": "Instar 4 berukuran panjang tubuh 14,25–18,7 mm. Tubuh penuh, warna hijau tua, dan pola tubuh lebih jelas."}
-        ]
-        instar_cols = st.columns(len(instar_info))
-
-        for idx, col in enumerate(instar_cols):
-            with col:
-                st.image(instar_info[idx]["image"], caption=instar_info[idx]["title"], use_column_width=True)
-                st.caption(instar_info[idx]["desc"])
 # Run app
 if __name__ == "__main__":
     main_page()
