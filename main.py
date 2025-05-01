@@ -47,7 +47,7 @@ st.markdown("""
 }
 
 [data-testid="stSidebarUserContent"]{
-    height: 100%; 
+    height: 200%; 
     padding-top: 4rem;
 }
 
