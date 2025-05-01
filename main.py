@@ -179,17 +179,26 @@ def main_page():
         }
     </style>
     """, unsafe_allow_html=True)
-    st.sidebar.markdown("<h1 style='text-align: left; color: #4A90E2;'>🐛 MARIOAPP</h1>", unsafe_allow_html=True)
+    st.sidebar.markdown("<h1 style='text-align: center; color: #2e5339;'>Langkah-Langkah Penggunaan</h1>", unsafe_allow_html=True)
     st.sidebar.markdown("""
-    Aplikasi ini bertujuan untuk mengklasifikasikan tahapan instar dari <b>Crocidolomia pavonana</b> berdasarkan gambar yang Anda upload.
-    Dengan menggunakan dua model deep learning yaitu <b>ConvNeXt Tiny</b> dan <b>Inception V3</b>, aplikasi ini memberikan hasil prediksi instar secara akurat.
-    Yuk, upload gambar ulatnya dan lihat hasil klasifikasinya!<br><br>
-    """, unsafe_allow_html=True)
+    1. **Upload Gambar**  
+    Unggah gambar larva Crocidolomia Pavonana berformat `.jpg`, `.jpeg`, atau `.png`.
 
-    st.sidebar.markdown("## Keunggulan Fitur")
-    st.sidebar.markdown("✅ Menggunakan dua model deep learning")
-    st.sidebar.markdown("✅ Memberikan hasil prediksi dan tingkat akurasi")
-    st.sidebar.markdown("✅ Membantu dalam pengelompokan instar untuk pengendalian hama")
+    2. **Lihat Pratinjau Gambar**  
+    Pratinjau gambar akan otomatis muncul di halaman utama.
+
+    3. **Klik 'Klasifikasi Gambar'**  
+    Untuk memulai prediksi tahap instar dengan model deep learning.
+
+    4. **Tunggu Proses Prediksi**  
+    Sistem akan menampilkan hasil klasifikasi dan tingkat akurasi.
+
+    5. **Tinjau Hasil**  
+    Hasil berupa kelas instar, akurasi, dan tabel confidence.
+
+    6. **Lihat Visualisasi Grad-CAM**  
+    Menampilkan area penting dari gambar berdasarkan prediksi model.
+    """)
 
     # 📤 Upload gambar untuk prediksi
     st.markdown("""<h1 style="text-align: center; font-size: 40px; color: #2e5339;">Klasifikasi Tahapan Instar Crocidolomia Pavonana</h1>""", unsafe_allow_html=True)
