@@ -19,7 +19,7 @@ st.markdown("""
         header {visibility: hidden;}
         .main .block-container {
             padding-top: 0rem;
-            height: 300%;
+            height: 500%;
         }
         
 [data-testid="stHeader"] {
