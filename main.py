@@ -126,15 +126,6 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-# Load models
-@st.cache_resource
-def load_convnext_model():
-    model_path = 'ConvNeXtTiny1_model.keras'
-    if not os.path.exists(model_path):
-        url = 'https://drive.google.com/uc?id=15cxTbXXeAf2OpoaPEjAiUnmp95AtCNT5'
-        gdown.download(url, model_path, quiet=False)
-    return tf.keras.models.load_model(model_path)
-
 @st.cache_resource
 def load_inception_model():
     model_path = 'InceptionV31_model.keras'
@@ -143,18 +134,9 @@ def load_inception_model():
         gdown.download(url, model_path, quiet=False)
     return tf.keras.models.load_model(model_path)
 
-convnext_model = load_convnext_model()
 inception_model = load_inception_model()
 
 # Preprocessing functions
-def preprocess_image_convnext(image: Image.Image):
-    image = image.resize((512, 512))
-    image_array = np.array(image)
-    if image_array.shape[-1] == 4:
-        image_array = image_array[:, :, :3]
-    image_array = np.expand_dims(image_array, axis=0)
-    return convnext_preprocess(image_array)
-
 def preprocess_image_inception(image: Image.Image):
     image = image.resize((512, 512))
     image_array = np.array(image)
@@ -229,12 +211,6 @@ def main_page():
                 # Mapping kelas
                 class_names = ['Instar 1', 'Instar 2', 'Instar 3', 'Instar 4']
 
-                # Prediksi ConvNeXt
-                preprocessed_convnext = preprocess_image_convnext(image)
-                prediction_convnext = convnext_model.predict(preprocessed_convnext)
-                predicted_class_convnext = class_names[np.argmax(prediction_convnext)]
-                confidence_convnext = np.max(prediction_convnext) * 100
-
                 # Prediksi InceptionV3
                 preprocessed_inception = preprocess_image_inception(image)
                 prediction_inception = inception_model.predict(preprocessed_inception)
@@ -245,7 +221,7 @@ def main_page():
                 st.markdown(f"""
                     <div class="card">
                         <strong>Model: </strong>InceptionV3<br>
-                        <strong>Prediksi: </strong>{predicted_class_convnext}<br>
+                        <strong>Prediksi: </strong>{predicted_class_inception}<br>
                         <strong>Akurasi: </strong>{confidence_inception:.2f}%<br>
                     </div>
                                     """, unsafe_allow_html=True)
@@ -259,13 +235,8 @@ def main_page():
 
                 st.dataframe(df_confidence.style.format({'Akurasi (%)': '{:.2f}'}))
 
-            # Grad-CAM ConvNeXt Tiny
             gradcam_status_placeholder = st.empty()
             gradcam_status_placeholder.info("⏳ Membuat Grad-CAM visualisasi...")
-
-            heatmap_convnext = make_gradcam_heatmap(preprocessed_convnext, convnext_model, "convnext_tiny_stage_3_block_2_identity")
-            heatmap_convnext = heatmap_convnext.numpy()
-            superimposed_img_convnext = superimpose_heatmap(image, heatmap_convnext)
 
             # Grad-CAM InceptionV3
             heatmap_inception = make_gradcam_heatmap(preprocessed_inception, inception_model, "mixed10")
@@ -276,11 +247,13 @@ def main_page():
 
             # Tampilkan Grad-CAM
             st.markdown("### Grad-CAM Visualisasi")
-            gradcam_col1, gradcam_col2 = st.columns(2)
+            gradcam_col1, gradcam_col2, gradcam_col3 = st.columns(3)
             with gradcam_col1:
-                st.image(superimposed_img_convnext, caption="Grad-CAM ConvNeXt Tiny", use_column_width=True)
+                st.write("")
             with gradcam_col2:
                 st.image(superimposed_img_inception, caption="Grad-CAM InceptionV3", use_column_width=True)
+            with gradcam_col3:
+                st.write("")
 
 
 # Run app
