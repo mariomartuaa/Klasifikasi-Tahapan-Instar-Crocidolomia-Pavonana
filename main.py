@@ -43,8 +43,12 @@ st.markdown("""
 }
 
 [data-testid="stSidebarUserContent"], [data-testid="stFileUploadDropzone"] {
-    background: linear-gradient(135deg, #e9f5db 0%, #c7e9b0 40%, #fef9c3 100%);
-    height: 200%; 
+    background: linear-gradient(135deg, #e9f5db 0%, #c7e9b0 40%, #fef9c3 100%); 
+}
+
+[data-testid="stSidebarUserContent"]{
+    height: 100%; 
+    padding-top: 4rem;
 }
 
 .banner {
