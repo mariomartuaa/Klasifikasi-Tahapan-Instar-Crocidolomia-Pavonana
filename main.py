@@ -254,7 +254,7 @@ def main_page():
                 # Data untuk visualisasi
                 df_confidence = pd.DataFrame({
                     'Tahap Instar': class_names,
-                    'Akurasi (%)': prediction_inception * 100
+                    'Akurasi (%)': prediction_inception[0] * 100
                 })
 
                 st.dataframe(df_confidence.style.format({'Akurasi (%)': '{:.2f}'}))
