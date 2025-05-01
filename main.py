@@ -246,7 +246,7 @@ def main_page():
             gradcam_status_placeholder.success("✅ Grad-CAM berhasil dibuat!")
 
             # Tampilkan Grad-CAM
-            st.markdown("### Grad-CAM Visualisasi")
+            st.markdown(f'<h1 style="text-align: center; font-size: 30px; color: #2e5339;">Grad-CAM Visualisasi</h1>', unsafe_allow_html=True)
             gradcam_col1, gradcam_col2, gradcam_col3 = st.columns(3)
             with gradcam_col1:
                 st.write("")
